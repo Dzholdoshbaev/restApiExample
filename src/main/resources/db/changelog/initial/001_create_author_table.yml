@@ -1,0 +1,29 @@
+databaseChangeLog:
+  - changeSet:
+      id: 001
+      author: Chyngyz
+      changes:
+        - createTable:
+            tableName: author
+            columns:
+              - column:
+                  name: uuid
+                  type: UUID
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: name
+                  type: varchar(50)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: surname
+                  type: varchar(100)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: birthday
+                  type: date
+                  constraints:
+                    nullable: false

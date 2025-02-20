@@ -1,0 +1,30 @@
+databaseChangeLog:
+  - changeSet:
+      id: 002
+      author: Chyngyz
+      changes:
+        - createTable:
+            tableName: book
+            columns:
+              - column:
+                  name: uuid
+                  type: UUID
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: title
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: author_uuid
+                  type: UUID
+        - addForeignKeyConstraint:
+            baseTableName: book
+            baseColumnNames: author_uuid
+            constraintName: author_for_book
+            referencedTableName: author
+            referencedColumnNames: uuid
+            onDelete: CASCADE
+            onUpdate: CASCADE
