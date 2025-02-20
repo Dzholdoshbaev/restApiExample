@@ -1,0 +1,33 @@
+server:
+  port: 8081
+spring:
+  liquibase:
+    change-log: classpath:/db/changelog/master.yaml
+  application:
+    name: demo
+
+  # ------------- DataBases
+  datasource:
+    url: jdbc:postgresql://localhost:5432/Library
+    username: abdyrakhman
+    password: 12345
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: false
+
+  output:
+    ansi:
+      enabled: always
+
+logging:
+  level:
+    com.zaxxer.hikari: debug
+    org.hibernate.SQL: debug
+    root: info
+    org:
+      springframework:
+        security: debug
+  file:
+    path: logs
