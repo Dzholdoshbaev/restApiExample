@@ -1,6 +1,5 @@
 package com.example.demo.server.impl;
 
-
 import com.example.demo.dto.AuthorDto;
 import com.example.demo.exceptions.AuthorNotFoundException;
 import com.example.demo.model.Author;
@@ -34,11 +33,11 @@ public class AuthorServiceImpl implements AuthorService {
     }
 
     @Override
-    public String deleteAuthor(String authorId) {
-        if (!authorRepository.existsById(UUID.fromString(authorId))) {
+    public String deleteAuthor(UUID authorId) {
+        if (!authorRepository.existsById(authorId)) {
                 throw new AuthorNotFoundException("Author does not exist");
         }
-        authorRepository.deleteById(UUID.fromString(authorId));
+        authorRepository.deleteById(authorId);
         return "Author deleted";
     }
 
@@ -69,8 +68,8 @@ public class AuthorServiceImpl implements AuthorService {
     }
 
     @Override
-    public AuthorDto getAuthorById(String authorId) {
-        Author author = authorRepository.findById(UUID.fromString(authorId)).orElseThrow(() -> new AuthorNotFoundException("Author not found"));
+    public AuthorDto getAuthorById(UUID authorId) {
+        Author author = authorRepository.findById(authorId).orElseThrow(() -> new AuthorNotFoundException("Author not found"));
         return convertToDto(author);
     }
 

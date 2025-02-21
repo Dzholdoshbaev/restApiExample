@@ -1,6 +1,5 @@
 package com.example.demo.controller;
 
-
 import com.example.demo.dto.AuthorDto;
 import com.example.demo.exceptions.AuthorNotFoundException;
 import com.example.demo.server.AuthorService;
@@ -10,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/authors")
@@ -31,7 +31,7 @@ public class AuthorController {
     }
 
     @DeleteMapping("/{authorId}")
-    public ResponseEntity<?> deleteAuthor(@PathVariable String authorId) {
+    public ResponseEntity<?> deleteAuthor(@PathVariable UUID authorId) {
         try {
             return ResponseEntity.ok(authorService.deleteAuthor(authorId));
         }catch (IllegalArgumentException e) {
@@ -44,7 +44,7 @@ public class AuthorController {
     }
 
     @GetMapping("/{authorId}")
-    public ResponseEntity<?> getAuthor(@PathVariable String authorId) {
+    public ResponseEntity<?> getAuthor(@PathVariable UUID authorId) {
         try {
             return ResponseEntity.ok(authorService.getAuthorById(authorId));
         }catch (IllegalArgumentException e) {
