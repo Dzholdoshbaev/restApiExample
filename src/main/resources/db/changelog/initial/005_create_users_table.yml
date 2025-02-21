@@ -1,0 +1,46 @@
+databaseChangeLog:
+  - changeSet:
+      id: 004
+      author: Chyngyz
+      changes:
+        - createTable:
+            tableName: users
+            columns:
+              - column:
+                  name: uuid
+                  type: UUID
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: name
+                  type: varchar(50)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: surname
+                  type: varchar(50)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: login
+                  type: varchar(120)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: password
+                  type: varchar(120)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: enabled
+                  type: boolean
+                  constraints:
+                    nullable: false
+              - column:
+                  name: authority_uuid
+                  type: UUID
+                  constraints:
+                    nullable: false
+                    foreignKeyName: authority_uuid_for_usr
+                    references: authorities(uuid)
