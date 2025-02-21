@@ -1,9 +1,7 @@
 package com.example.demo.server;
 
-
 import com.example.demo.dto.AuthorDto;
 import com.example.demo.model.Author;
-
 import java.util.List;
 import java.util.UUID;
 
