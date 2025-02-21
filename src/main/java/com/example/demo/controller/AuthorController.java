@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/author")
+@RequestMapping("/api/authors")
 public class AuthorController {
     private final AuthorService authorService;
 
@@ -26,12 +26,12 @@ public class AuthorController {
     }
 
     @PostMapping()
-    public ResponseEntity<AuthorDto> create(@RequestBody AuthorDto authorDto) {
+    public ResponseEntity<AuthorDto> createAuthor(@RequestBody AuthorDto authorDto) {
         return ResponseEntity.ok(authorService.createAuthor(authorDto));
     }
 
     @DeleteMapping("/{authorId}")
-    public ResponseEntity<?> delete(@PathVariable String authorId) {
+    public ResponseEntity<?> deleteAuthor(@PathVariable String authorId) {
         try {
             return ResponseEntity.ok(authorService.deleteAuthor(authorId));
         }catch (IllegalArgumentException e) {
@@ -57,7 +57,7 @@ public class AuthorController {
     }
 
     @PutMapping()
-    public ResponseEntity<?> edit(@RequestBody  AuthorDto authorDto) {
+    public ResponseEntity<?> editAuthor(@RequestBody  AuthorDto authorDto) {
         try {
             return ResponseEntity.ok(authorService.editAuthor(authorDto));
         }catch (IllegalArgumentException e) {
