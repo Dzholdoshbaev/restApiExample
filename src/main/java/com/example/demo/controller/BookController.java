@@ -6,7 +6,7 @@ import com.example.demo.dto.BookDto;
 import com.example.demo.exceptions.AuthorNotFoundException;
 import com.example.demo.exceptions.BookNotFoundException;
 import com.example.demo.server.BookService;
-import com.example.demo.utils.ErrorResponse;
+import com.example.demo.controller.response.ErrorResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
