@@ -2,6 +2,7 @@ package com.example.demo.server.impl;
 
 import com.example.demo.dto.AuthorDto;
 import com.example.demo.exceptions.AuthorNotFoundException;
+import com.example.demo.mappers.AuthorMapper;
 import com.example.demo.model.Author;
 import com.example.demo.repository.AuthorRepository;
 import com.example.demo.server.AuthorService;
@@ -13,22 +14,24 @@ import java.util.stream.Collectors;
 @Service
 public class AuthorServiceImpl implements AuthorService {
     private final AuthorRepository authorRepository;
+    private final AuthorMapper authorMapper;
 
-    public AuthorServiceImpl(AuthorRepository authorRepository) {
+    public AuthorServiceImpl(AuthorRepository authorRepository, AuthorMapper authorMapper) {
         this.authorRepository = authorRepository;
+        this.authorMapper = authorMapper;
     }
 
     @Override
     public List<AuthorDto> getAllAuthors() {
        List<Author> authors = authorRepository.findAll();
-        return authors.stream().map(this::convertToDto).collect(Collectors.toList());
+        return authors.stream().map(authorMapper::convertToDto).collect(Collectors.toList());
     }
 
     @Override
     public AuthorDto createAuthor(AuthorDto authorDto) {
-        Author author = convertToEntity(authorDto);
+        Author author = authorMapper.convertToEntity(authorDto);
         Author createdAuthor = authorRepository.save(author);
-        return convertToDto(createdAuthor);
+        return authorMapper.convertToDto(createdAuthor);
     }
 
     @Override
@@ -45,21 +48,10 @@ public class AuthorServiceImpl implements AuthorService {
         if (!authorRepository.existsById(authorDto.getId())) {
             throw new AuthorNotFoundException("Author does not exist");
         }
-        Author author = convertToEntity(authorDto);
+        Author author = authorMapper.convertToEntity(authorDto);
         Author updatedAuthor = authorRepository.save(author);
-        return convertToDto(updatedAuthor);
+        return authorMapper.convertToDto(updatedAuthor);
     }
-
-    @Override
-    public AuthorDto convertToDto(Author author) {
-        return new AuthorDto(author.getId(),author.getName(),author.getSurname(),author.getBirthDate());
-    }
-
-    @Override
-    public Author convertToEntity(AuthorDto authorDto) {
-        return new Author(authorDto.getId(),authorDto.getName(),authorDto.getSurname(),authorDto.getBirthDate());
-    }
-
 
     @Override
     public Author getBookAuthor(String authorId) {
@@ -69,7 +61,7 @@ public class AuthorServiceImpl implements AuthorService {
     @Override
     public AuthorDto getAuthorById(UUID authorId) {
         Author author = authorRepository.findById(authorId).orElseThrow(() -> new AuthorNotFoundException("Author not found"));
-        return convertToDto(author);
+        return authorMapper.convertToDto(author);
     }
 
     @Override

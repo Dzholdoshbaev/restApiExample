@@ -3,7 +3,7 @@ package com.example.demo.server.impl;
 import com.example.demo.dto.BookDto;
 import com.example.demo.exceptions.AuthorNotFoundException;
 import com.example.demo.exceptions.BookNotFoundException;
-import com.example.demo.model.Author;
+import com.example.demo.mappers.BookMapper;
 import com.example.demo.model.Book;
 import com.example.demo.repository.BookRepository;
 import com.example.demo.server.AuthorService;
@@ -17,10 +17,12 @@ import java.util.stream.Collectors;
 public class BookServiceImpl implements BookService {
     private final BookRepository bookRepository;
     private final AuthorService authorService;
+    private final BookMapper bookMapper;
 
-    public BookServiceImpl(BookRepository bookRepository, AuthorService authorService) {
+    public BookServiceImpl(BookRepository bookRepository, AuthorService authorService, BookMapper bookMapper) {
         this.bookRepository = bookRepository;
         this.authorService = authorService;
+        this.bookMapper = bookMapper;
     }
 
     @Override
@@ -28,9 +30,9 @@ public class BookServiceImpl implements BookService {
         if (!authorService.checkBookAuthor(bookDto.getAuthorId())){
             throw new AuthorNotFoundException("Author not found");
         }
-        Book book = convertToEntity(bookDto);
+        Book book = bookMapper.convertToEntity(bookDto);
         Book updatedBook = bookRepository.save(book);
-        return convertToDto(updatedBook);
+        return bookMapper.convertToDto(updatedBook);
     }
 
     @Override
@@ -47,31 +49,20 @@ public class BookServiceImpl implements BookService {
         if (!authorService.checkBookAuthor(bookDto.getAuthorId())){
             throw new AuthorNotFoundException("Author not found");
         }
-        Book book = convertToEntity(bookDto);
+        Book book = bookMapper.convertToEntity(bookDto);
         Book createdBook = bookRepository.save(book);
-        return convertToDto(createdBook);
+        return bookMapper.convertToDto(createdBook);
     }
 
     @Override
     public List<BookDto> getAllBooks() {
         List<Book> books = bookRepository.findAll();
-        return books.stream().map(this::convertToDto).collect(Collectors.toList());
-    }
-
-    @Override
-    public BookDto convertToDto(Book book) {
-        return new BookDto(book.getId(),book.getTitle(),book.getAuthor().getId().toString());
-    }
-
-    @Override
-    public Book convertToEntity(BookDto bookDto) {
-        Author author = authorService.getBookAuthor(bookDto.getAuthorId());
-        return new Book(bookDto.getId(), bookDto.getTitle(), author);
+        return books.stream().map(bookMapper::convertToDto).collect(Collectors.toList());
     }
 
     @Override
     public BookDto getBookById(UUID bookId) {
         Book book = bookRepository.findById(bookId).orElseThrow(() -> new BookNotFoundException("Book does not exist"));
-        return convertToDto(book);
+        return bookMapper.convertToDto(book);
     }
 }

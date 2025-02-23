@@ -14,10 +14,6 @@ public interface AuthorService {
 
     AuthorDto editAuthor(AuthorDto authorDto);
 
-    AuthorDto convertToDto(Author author);
-
-    Author convertToEntity(AuthorDto authorDto);
-
     Author getBookAuthor(String authorId);
 
     AuthorDto getAuthorById(UUID authorId);
