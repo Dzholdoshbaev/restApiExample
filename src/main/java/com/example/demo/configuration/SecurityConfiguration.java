@@ -63,6 +63,7 @@ public class SecurityConfiguration {
                 .requestMatchers(HttpMethod.POST,"api/books").hasAuthority("ADMIN")
                 .requestMatchers(HttpMethod.PUT,"api/books").hasAuthority("ADMIN")
                 .requestMatchers(HttpMethod.DELETE,"api/books/*").hasAuthority("ADMIN")
+                        .requestMatchers("api/users").hasAuthority("ADMIN")
                 .anyRequest().permitAll());
         return http.build();
     }
