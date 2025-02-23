@@ -1,4 +1,4 @@
-package com.example.demo.utils;
+package com.example.demo.controller.response;
 
 public class ErrorResponse {
     private int status;

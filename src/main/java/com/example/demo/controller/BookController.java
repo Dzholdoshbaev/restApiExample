@@ -1,20 +1,19 @@
 package com.example.demo.controller;
 
-
-
 import com.example.demo.dto.BookDto;
 import com.example.demo.exceptions.AuthorNotFoundException;
 import com.example.demo.exceptions.BookNotFoundException;
 import com.example.demo.server.BookService;
-import com.example.demo.utils.ErrorResponse;
+import com.example.demo.controller.response.ErrorResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
-@RequestMapping("/api/book")
+@RequestMapping("/api/books")
 public class BookController {
     private final BookService bookService;
 
@@ -38,7 +37,7 @@ public class BookController {
     }
 
     @DeleteMapping("/{bookId}")
-    private ResponseEntity<?> deleteBook(@PathVariable String bookId) {
+    private ResponseEntity<?> deleteBook(@PathVariable UUID bookId) {
         try {
             return ResponseEntity.ok(bookService.deleteBook(bookId));
         }catch (IllegalArgumentException e) {
@@ -51,7 +50,7 @@ public class BookController {
     }
 
     @GetMapping("/{bookId}")
-    public ResponseEntity<?> getBook(@PathVariable String bookId) {
+    public ResponseEntity<?> getBook(@PathVariable UUID bookId) {
         try {
             return ResponseEntity.ok(bookService.getBookById(bookId));
         }catch (IllegalArgumentException e) {

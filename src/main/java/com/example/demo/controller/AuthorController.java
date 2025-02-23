@@ -1,18 +1,18 @@
 package com.example.demo.controller;
 
-
 import com.example.demo.dto.AuthorDto;
 import com.example.demo.exceptions.AuthorNotFoundException;
 import com.example.demo.server.AuthorService;
-import com.example.demo.utils.ErrorResponse;
+import com.example.demo.controller.response.ErrorResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
-@RequestMapping("/api/author")
+@RequestMapping("/api/authors")
 public class AuthorController {
     private final AuthorService authorService;
 
@@ -26,12 +26,12 @@ public class AuthorController {
     }
 
     @PostMapping()
-    public ResponseEntity<AuthorDto> create(@RequestBody AuthorDto authorDto) {
+    public ResponseEntity<AuthorDto> createAuthor(@RequestBody AuthorDto authorDto) {
         return ResponseEntity.ok(authorService.createAuthor(authorDto));
     }
 
     @DeleteMapping("/{authorId}")
-    public ResponseEntity<?> delete(@PathVariable String authorId) {
+    public ResponseEntity<?> deleteAuthor(@PathVariable UUID authorId) {
         try {
             return ResponseEntity.ok(authorService.deleteAuthor(authorId));
         }catch (IllegalArgumentException e) {
@@ -44,7 +44,7 @@ public class AuthorController {
     }
 
     @GetMapping("/{authorId}")
-    public ResponseEntity<?> getAuthor(@PathVariable String authorId) {
+    public ResponseEntity<?> getAuthor(@PathVariable UUID authorId) {
         try {
             return ResponseEntity.ok(authorService.getAuthorById(authorId));
         }catch (IllegalArgumentException e) {
@@ -57,7 +57,7 @@ public class AuthorController {
     }
 
     @PutMapping()
-    public ResponseEntity<?> edit(@RequestBody  AuthorDto authorDto) {
+    public ResponseEntity<?> editAuthor(@RequestBody  AuthorDto authorDto) {
         try {
             return ResponseEntity.ok(authorService.editAuthor(authorDto));
         }catch (IllegalArgumentException e) {

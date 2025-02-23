@@ -1,0 +1,19 @@
+databaseChangeLog:
+  - changeSet:
+      id: 003
+      author: Chyngyz
+      changes:
+        - createTable:
+            tableName: authorities
+            columns:
+              - column:
+                  name: uuid
+                  type: UUID
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: authority
+                  type: varchar(60)
+                  constraints:
+                    nullable: false

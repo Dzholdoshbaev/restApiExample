@@ -1,6 +1,5 @@
 package com.example.demo.server.impl;
 
-
 import com.example.demo.dto.BookDto;
 import com.example.demo.exceptions.AuthorNotFoundException;
 import com.example.demo.exceptions.BookNotFoundException;
@@ -10,7 +9,6 @@ import com.example.demo.repository.BookRepository;
 import com.example.demo.server.AuthorService;
 import com.example.demo.server.BookService;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -36,11 +34,11 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public String deleteBook(String bookId) {
-        if (!bookRepository.existsById(UUID.fromString(bookId))) {
+    public String deleteBook(UUID bookId) {
+        if (!bookRepository.existsById(bookId)) {
                 throw new BookNotFoundException("Book does not exist");
         }
-        bookRepository.deleteById(UUID.fromString(bookId));
+        bookRepository.deleteById(bookId);
         return "Book deleted";
     }
 
@@ -72,8 +70,8 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public BookDto getBookById(String bookId) {
-        Book book = bookRepository.findById(UUID.fromString(bookId)).orElseThrow(() -> new BookNotFoundException("Book does not exist"));
+    public BookDto getBookById(UUID bookId) {
+        Book book = bookRepository.findById(bookId).orElseThrow(() -> new BookNotFoundException("Book does not exist"));
         return convertToDto(book);
     }
 }
