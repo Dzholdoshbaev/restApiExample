@@ -5,7 +5,6 @@ import com.example.demo.model.Authorities;
 import com.example.demo.repository.AuthoritiesRepository;
 import com.example.demo.server.AuthoritiesService;
 import org.springframework.stereotype.Service;
-
 import java.util.UUID;
 
 @Service

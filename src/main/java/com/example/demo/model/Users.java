@@ -2,7 +2,6 @@ package com.example.demo.model;
 
 import jakarta.persistence.*;
 import org.apache.commons.lang3.builder.ToStringExclude;
-
 import java.util.UUID;
 
 @Entity
